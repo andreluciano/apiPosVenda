@@ -1,10 +1,10 @@
 const mysql = require('mysql');
 
 const conexao = mysql.createConnection({
-    host: 'localhost', 
+    host: 'host',
     port: 3306,
-    user: 'root',
-    password: 'Tatu1793',
+    user: 'user',
+    password: 'passwd',
     database: 'db_mensagens_posvenda',
 });
 
