@@ -4,7 +4,6 @@ module.exports = app => {
 
     app.post('/agendamento', (req, res) => {
         const dados = req.body;
-        console.log(dados);
         Agendamento.adiciona(dados, res);
     });
 

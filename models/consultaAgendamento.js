@@ -18,20 +18,34 @@ class ConsultaAgendamento {
     buscaPorId(id, res){
         const sql = `SELECT * FROM mensagens_agendadas WHERE idAgendamento = ${id}`;
 
-        conexao.query(sql, (erro, resultados) => {
-            const mensagem = resultados[0];
-            if(erro){
-                res.status(400).json(erro);
-            }else{
-                if(resultados.length>0){
-                    res.status(200).json(mensagem);
+        try {
+
+            conexao.query(sql, (erro, resultados) => {
+                if(erro){
+                    const status = "erro";
+                    const descricao = "Erro no processamento. Verifique os parâmetros.";
+                    const retorno = {status, descricao}
+
+                    res.status(400).json(retorno);
                 }else{
-                    const aviso = "nenhum registro encontrado";
-                    const retorno = {aviso};
-                    res.status(200).json(retorno);
+                    if(resultados.length>0){
+                        const mensagem = resultados[0];
+                        res.status(200).json(mensagem);
+                    }else{
+                        const status = "nenhum registro encontrado";
+                        const retorno = {status};
+                        res.status(200).json(retorno);
+                    }
                 }
-            }
-        });
+            });
+
+        }catch (e) {
+            const status = "erro";
+            const descricao = "Erro no processamento. Verifique os parâmetros.";
+            const retorno = {status, descricao}
+
+            res.status(400).json(retorno);
+        }
     }
 
 }
